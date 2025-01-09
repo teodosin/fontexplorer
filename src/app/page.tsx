@@ -37,23 +37,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="fixed bottom-0 items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://teodosin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Teodosin Site
-        </a>
-      </footer>
+
 
       <div className="fixed bottom-0 left-0 right-0 h-20 flex items-center flex-col mb-20">
           <TextInput type="preview-text" />

@@ -26,11 +26,15 @@ const geistMono = Geist_Mono({
 // };
 
 function Header() {
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="flex items-center justify-between p-4 top-0 sticky">
-      <Button onclick={toggleTheme} label="dark mode" />
+      <Button onClick={() => {
+        console.log("Changing theme to: ", theme);
+        toggleTheme();
+      }
+      } label="dark mode" />
     </header>
   )
 }
@@ -43,13 +47,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
 
           <Header />
 
           {children}
+
+          <footer className="fixed bottom-0 items-center justify-center">
+          </footer>
 
         </ThemeProvider>
       </body>
