@@ -1,4 +1,4 @@
-const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
+const GOOGLE_FONTS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY;
 
 const CURRENTS_KEY = "teodosin-font-explorer";
 const RELATIONS_KEY = "teodosin-font-explorer-relations";
@@ -71,11 +71,12 @@ export async function getFontsList(): Promise<any[]> {
     // Todo: Periodically update fonts list
 
     console.log("Getting fonts list...");
-    const cache = localStorage.getItem("fonts");
-    if (cache) {
-        console.log("Using cached fonts list");
-        return JSON.parse(cache);
-    }
+    // const cache = localStorage.getItem("fonts");
+    // if (cache && cache.length > 0) {
+    //     console.log("Using cached fonts list");
+    //     return JSON.parse(cache);
+    // }
+    console.log("Api key is " + GOOGLE_FONTS_API_KEY);
 
     const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`);
     const data = await response.json();

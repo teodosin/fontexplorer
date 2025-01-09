@@ -4,9 +4,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { ThemeProvider, useTheme } from "@/ThemeContext";
+import { getFontsList } from "@/fonts";
 
 // const darkModeContext = createContext(false);
 
@@ -27,6 +28,10 @@ const geistMono = Geist_Mono({
 
 function Header() {
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    getFontsList();
+  }, [theme]);
 
   return (
     <header className="flex items-center justify-between p-4 top-0 sticky">
