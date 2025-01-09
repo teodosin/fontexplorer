@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Thumbnail from "@/components/Thumbnail";
 import Button from "@/components/Button";
+import TextInput from "@/components/TextInput";
 
 export default function Home() {
   const adventures = [
@@ -36,7 +37,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <footer className="fixed bottom-0 items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://teodosin.com"
@@ -53,6 +54,10 @@ export default function Home() {
           Teodosin Site
         </a>
       </footer>
+
+      <div className="fixed bottom-0 left-0 right-0 h-20 flex items-center flex-col mb-20">
+          <TextInput type="preview-text" />
+      </div>
     </div>
   );
 }
