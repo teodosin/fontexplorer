@@ -8,8 +8,8 @@ interface TextInputProps {
 }
 
 export default function TextInput({ type, text, onChange }: TextInputProps) {
-    const inputClasses = "border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg px-4 py-2 w-full"
-    const containerClasses = "max-w-sm rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105"
+    const containerClasses = "max-w-32rem w-full rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105"
+    const inputClasses = "dark:bg-gray-700 dark:text-white rounded-lg px-4 py-2 w-full"
 
     const placeholderMap = {
         "search": "Search fonts...",
