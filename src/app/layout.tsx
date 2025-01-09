@@ -1,5 +1,3 @@
-'use client'
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -7,7 +5,9 @@ import "./globals.css";
 import { createContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { ThemeProvider, useTheme } from "@/ThemeContext";
-import { getFontsList } from "@/fonts";
+import { getFontsList, loadAllFonts } from "@/fonts";
+import FontLoader from "@/components/FontLoader";
+import Header from "@/components/Header";
 
 // const darkModeContext = createContext(false);
 
@@ -26,35 +26,22 @@ const geistMono = Geist_Mono({
 //   description: "Explore fonts by making comparisons",
 // };
 
-function Header() {
-  const { theme, toggleTheme } = useTheme();
-
-  useEffect(() => {
-    getFontsList();
-  }, [theme]);
-
-  return (
-    <header className="flex items-center justify-between p-4 top-0 sticky">
-      <Button onClick={() => {
-        console.log("Changing theme to: ", theme);
-        toggleTheme();
-      }
-      } label="dark mode" />
-    </header>
-  )
-}
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  let fonts = await getFontsList();
+  let families = (fonts).map((font) => font.family);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
+          <FontLoader fontFamilies={families} />
 
           <Header />
 

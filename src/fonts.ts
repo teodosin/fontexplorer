@@ -71,18 +71,30 @@ export async function getFontsList(): Promise<any[]> {
     // Todo: Periodically update fonts list
 
     console.log("Getting fonts list...");
-    // const cache = localStorage.getItem("fonts");
-    // if (cache && cache.length > 0) {
-    //     console.log("Using cached fonts list");
-    //     return JSON.parse(cache);
-    // }
-    console.log("Api key is " + GOOGLE_FONTS_API_KEY);
+    // Check if we're in browser environment before using localStorage
+    if (typeof window !== 'undefined') {
+        const cache = localStorage.getItem("fonts");
+        if (cache && cache.length > 0) {
+            console.log("Using cached fonts list");
+            return JSON.parse(cache);
+        }
+    }
 
     const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`);
     const data = await response.json();
 
-    localStorage.setItem("fonts", JSON.stringify(data.items));
+    // Only set localStorage if we're in browser environment
+    if (typeof window !== 'undefined') {
+        localStorage.setItem("fonts", JSON.stringify(data.items));
+    }
 
-    // Save the fonts to localstorage
     return data.items;
+}
+
+export function loadAllFonts(fontFamilies: string[]) {
+    const families = fontFamilies.map(f => encodeURIComponent(f)).join('&family=')
+    const link = document.createElement('link')
+    link.href = `https://fonts.googleapis.com/css2?family=${families}&display=swap`
+    link.rel = 'stylesheet'
+    document.head.appendChild(link)
 }

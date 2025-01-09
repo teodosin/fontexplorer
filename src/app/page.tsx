@@ -29,7 +29,7 @@ export default function Home() {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 h-20 flex items-center flex-col mb-20">
-          <TextInput type="preview-text" />
+          <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
       </div>
     </div>
   );
