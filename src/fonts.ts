@@ -11,22 +11,13 @@ export interface CurrentData {
     currentPreviewText: string;
 }
 
+// Reminder: Use saveCurrents only inside hooks
 export function saveCurrents(data: CurrentData) {
-    if (typeof window === 'undefined') return;
-
     localStorage.setItem(CURRENTS_KEY, JSON.stringify(data));
 }
 
+// Reminder: Use loadCurrents only inside hooks
 export function loadCurrents(): CurrentData {
-    if (typeof window === 'undefined') {
-        return {
-            version: "0.0.1",
-            currentFont: "Georgia",
-            currentFontSize: 16,
-            currentPreviewText: "The quick brown fox jumps over the lazy dog"
-        };
-    }
-
     const data = localStorage.getItem(CURRENTS_KEY);
     if (data) {
         return JSON.parse(data);
@@ -58,19 +49,13 @@ export interface Relation {
     valueChange: number | "more" | "less";
 }
 
+// Reminder: Use saveRelations only inside hooks
 export function saveRelations(data: RelationsData) {
-    if (typeof window === 'undefined') return;
     localStorage.setItem(RELATIONS_KEY, JSON.stringify(data));
 }
 
+// Reminder: Use loadRelations only inside hooks
 export function loadRelations(): RelationsData {
-    if (typeof window === 'undefined') {
-        return {
-            version: "0.0.1",
-            relationTypes: [],
-            relations: []
-        };
-    }
     const data = localStorage.getItem(RELATIONS_KEY);
     if (data) {
         return JSON.parse(data);
@@ -109,10 +94,8 @@ export async function getFontsList(): Promise<any[]> {
     }
 }
 
-
+// Reminder: Use getFontsFromLocal only inside hooks
 export function getFontsFromLocal() {
-    if (typeof window === 'undefined') return [];
-
     const fonts = localStorage.getItem("fonts");
     if (fonts) {
         return JSON.parse(fonts);
