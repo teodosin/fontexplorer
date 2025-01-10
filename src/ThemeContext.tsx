@@ -10,10 +10,17 @@ interface ThemeData {
 }
 
 export function saveTheme(data: ThemeData) {
+    if (typeof window === 'undefined') return;
     localStorage.setItem(THEME_KEY, JSON.stringify(data));
 }
 
 export function loadTheme(): ThemeData {
+    if (typeof window === 'undefined') {
+        return {
+            version: "0.0.1",
+            theme: "dark"
+        };
+    }
     const data = localStorage.getItem(THEME_KEY);
     if (data) {
         return JSON.parse(data);

@@ -9,7 +9,9 @@
 // state instead of localstorage. 
 
 export default function FontSaver({ fonts }: { fonts: any[] }) {
-  localStorage.setItem("fonts", JSON.stringify(fonts));
-
+  if (typeof window !== 'undefined') {
+    localStorage.setItem("fonts", JSON.stringify(fonts));
+  }
+  
   return null
 }
