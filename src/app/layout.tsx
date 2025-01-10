@@ -38,7 +38,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-gray-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
           <FontLoader fontFamilies={families} />
