@@ -6,7 +6,7 @@ import { createContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { ThemeProvider, useTheme } from "@/ThemeContext";
 import { getFontsList, importAllFonts } from "@/fonts";
-import FontLoader from "@/components/FontLoader";
+import FontSaver from "@/components/FontLoader";
 import Header from "@/components/Header";
 
 // const darkModeContext = createContext(false);
@@ -40,7 +40,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
-          <FontLoader fonts={fonts} />
+          <FontSaver fonts={fonts} />
 
           <Header />
 

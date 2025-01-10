@@ -6,6 +6,7 @@ import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
 import { getFontsFromLocal, getFontsList, loadCurrents, loadRelations, saveCurrents } from "@/fonts";
 import { useEffect, useState } from "react";
+import WebFont from "webfontloader";
 
 export default function Home() {
   const [ currentFont, setCurrentFont ] = useState("Georgia");
@@ -101,6 +102,21 @@ export default function Home() {
         }
       });
     }
+
+    // Use WebFont to load the fonts before updating relations
+    WebFont.load({
+      google: {
+        families: shownFonts.map((font: any) => font.fontFamily)
+        // api: process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY,
+      },
+      loading: () => {
+        console.log('Loading fonts...');
+      },
+      active: () => {
+        console.log('Fonts loaded!');
+      },
+    });
+
     setRelations(shownFonts);
   }, [currentFont]);
 

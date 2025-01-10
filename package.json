@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/webfontloader": "^1.6.38",
     "next": "15.1.4",
     "nextjs": "^0.0.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@types/node": "^20",
