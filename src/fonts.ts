@@ -70,28 +70,10 @@ export interface GoogleFont {
 }
 
 export async function getFontsList(): Promise<any[]> {
-    // Todo: Periodically update fonts list
-
-    console.log("Getting fonts list...");
-    // Check if we're in browser before using localStorage
-    if (typeof window !== 'undefined') {
-        const cache = localStorage.getItem("fonts");
-        if (cache && cache.length > 0) {
-            console.log("Using cached fonts list");
-            return JSON.parse(cache);
-        }
-    }
 
     console.log("Fetching from Google Fonts API")
     const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`);
     const data = await response.json();
-
-    console.log(("Fetched fonts list. Length: " + data.items.length));
-
-    // Only set localStorage if we're in browser
-    if (typeof window !== 'undefined') {
-        localStorage.setItem("fonts", JSON.stringify(data.items));
-    }
 
     return data.items;
 }
