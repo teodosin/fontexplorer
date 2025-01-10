@@ -11,7 +11,5 @@
 export default function FontSaver({ fonts }: { fonts: any[] }) {
   localStorage.setItem("fonts", JSON.stringify(fonts));
 
-  let fontFamilies = fonts.map(f => f.family)
-
   return null
 }

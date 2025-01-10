@@ -7,7 +7,7 @@ This is a proof of concept application for exploring fonts through their relatio
 * [x] Font loading from Google Fonts API
 * [x] Theme switching (dark/light)
 * [x] Font suggestions and changing the active font
-* [ ] Font rendering
+* [x] Font rendering
 * [ ] Font relations
 
 This app is just a proof of concept and is not intended to be a fully-featured font explorer. A proper app would need a central database for the font relations so individual users wouldn't have to define relations for the hundreds of fonts that there are. Creating embeddings for fonts and implementing a vector database would also be very interesting to explore. 
