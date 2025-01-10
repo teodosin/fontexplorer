@@ -10,6 +10,8 @@ export interface FontBlockProps {
 }
 
 export default function FontBlock({ fontFamily, previewText, previewSize, relation, onClick }: FontBlockProps) {
+  let preview = previewText == '' ? 'Quick Brown Fox' : previewText
+
   return (
     <button
       onClick={onClick}
@@ -26,7 +28,7 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
           fontSize: `${previewSize}px`,
           lineHeight: `${previewSize * 1.1}px`,
         }}
-      >{previewText}</span>
+      >{preview}</span>
 
     </button>
   )
