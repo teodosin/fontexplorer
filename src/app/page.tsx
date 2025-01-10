@@ -4,7 +4,7 @@ import CurrentFont from "@/components/CurrentFont";
 import FontBlock, { FontBlockProps } from "@/components/FontBlock";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
-import { getFontsFromLocal, loadCurrents, loadRelations, saveCurrents } from "@/fonts";
+import { getFontsFromLocal, getFontsList, loadCurrents, loadRelations, saveCurrents } from "@/fonts";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -19,6 +19,8 @@ export default function Home() {
     setCurrentFont(data.currentFont);
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
+
+
   }, []);
 
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function Home() {
       updated.push(newRel);
     }
     setRelations(updated);
+
   }, [currentFont, previewSize, previewText]);
 
   useEffect(() => {

@@ -33,7 +33,6 @@ export default async function RootLayout({
 }>) {
 
   let fonts = await getFontsList();
-  let families = (fonts).map((font) => font.family);
 
   return (
     <html lang="en">
@@ -41,7 +40,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
-          <FontLoader fontFamilies={families} />
+          <FontLoader fonts={fonts} />
 
           <Header />
 

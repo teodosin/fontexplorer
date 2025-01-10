@@ -13,7 +13,10 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
   return (
     <button
       onClick={onClick}
-      className="w-80 px-6 rounded-3xl overflow-hidden bg-white dark:bg-gray-800 p-4 justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      className={
+        `w-80 px-6 rounded-3xl overflow-hidden bg-white dark:bg-gray-800 p-4 
+        justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors`
+      }
     >
       <h6 className="text-gray-700 dark:text-gray-400 text-base pb-4">{fontFamily}</h6>
 
