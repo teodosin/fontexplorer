@@ -143,8 +143,7 @@ export default function Home() {
 
       </main>
 
-      <div className={`fixed bottom-0 left-0 right-0 flex items-center flex-col gap-4 mb-20 
-        bg-slate-200 dark:bg-black p-4 bg-opacity-50 dark:bg-opacity-80 backdrop-blur-md`}>
+      <div className={`fixed bottom-0 left-0 right-0 flex items-center flex-col gap-4 mb-20`}>
           <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
           <Slider onChange={setPreviewSize} value={previewSize} />
       </div>
