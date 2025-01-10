@@ -4,7 +4,7 @@ import CurrentFont from "@/components/CurrentFont";
 import FontBlock, { FontBlockProps } from "@/components/FontBlock";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
-import { getFontsFromLocal, loadCurrents, loadRelations, saveCurrents } from "@/fonts";
+import { getFontsFromLocal, loadCurrents, loadRelations, saveCurrents } from "@/fonts_client";
 import { useEffect, useState } from "react";
 import WebFont from "webfontloader";
 
