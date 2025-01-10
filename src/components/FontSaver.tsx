@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from "react";
+
 // This component is used to save the fonts to local storage.
 // Reason being that the fonts can't be fetched from the api from a client 
 // component (because of the async/await restriction) and localstorage
@@ -9,9 +11,9 @@
 // state instead of localstorage. 
 
 export default function FontSaver({ fonts }: { fonts: any[] }) {
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
     localStorage.setItem("fonts", JSON.stringify(fonts));
-  }
-  
+
+  }, [])  
   return null
 }

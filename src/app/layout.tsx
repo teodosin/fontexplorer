@@ -6,7 +6,7 @@ import { createContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { ThemeProvider, useTheme } from "@/ThemeContext";
 import { getFontsList } from "@/fonts";
-import FontSaver from "@/components/FontLoader";
+import FontSaver from "@/components/FontSaver";
 import Header from "@/components/Header";
 
 // const darkModeContext = createContext(false);
