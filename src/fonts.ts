@@ -41,6 +41,8 @@ export interface RelationsData {
 // Some properties can't be exactly quantified so we can just
 // say if it's more or less. 
 export interface Relation {
+    fromFamily: string;
+    toFamily: string;
     property: string;
     valueChange: number | "more" | "less";
 }
@@ -91,7 +93,17 @@ export async function getFontsList(): Promise<any[]> {
     return data.items;
 }
 
-export function loadAllFonts(fontFamilies: string[]) {
+export function getFontsFromLocal() {
+    const fonts = localStorage.getItem("fonts");
+    if (fonts) {
+        return JSON.parse(fonts);
+    }
+    else {
+        return [];
+    }
+}
+
+export function importAllFonts(fontFamilies: string[]) {
     const families = fontFamilies.map(f => encodeURIComponent(f)).join('&family=')
     const link = document.createElement('link')
     link.href = `https://fonts.googleapis.com/css2?family=${families}&display=swap`

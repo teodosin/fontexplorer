@@ -5,7 +5,7 @@ import "./globals.css";
 import { createContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { ThemeProvider, useTheme } from "@/ThemeContext";
-import { getFontsList, loadAllFonts } from "@/fonts";
+import { getFontsList, importAllFonts } from "@/fonts";
 import FontLoader from "@/components/FontLoader";
 import Header from "@/components/Header";
 

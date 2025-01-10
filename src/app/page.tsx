@@ -1,10 +1,10 @@
 'use client'
 
 import CurrentFont from "@/components/CurrentFont";
-import FontBlock from "@/components/FontBlock";
+import FontBlock, { FontBlockProps } from "@/components/FontBlock";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
-import { loadCurrents, saveCurrents } from "@/fonts";
+import { getFontsFromLocal, loadCurrents, loadRelations, saveCurrents } from "@/fonts";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -12,8 +12,7 @@ export default function Home() {
   const [ previewText, setPreviewText ] = useState("");
   const [ previewSize, setPreviewSize ] = useState(16);
 
-  const [ relations, setRelations ] = useState([]);
-  const [ suggestions, setSuggestions ] = useState([]);
+  const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
 
   useEffect(() => {
     let data = loadCurrents();
@@ -32,6 +31,66 @@ export default function Home() {
     })
   }, [currentFont, previewSize, previewText]);
 
+  useEffect(() => {
+    let fonts = getFontsFromLocal();
+    // Fetching relations from localstorage when currentFont changes
+    let data = loadRelations();
+
+    let shownFonts: FontBlockProps[] = []
+
+    let fromRelations = data.relations.filter((relation: any) => relation.fromFamily === currentFont);
+    for (let relation of fromRelations) {
+      shownFonts.push({
+        fontFamily: relation.toFamily,
+        previewText: previewText,
+        previewSize: previewSize,
+        relation: relation,
+        onClick: () => {
+          setCurrentFont(relation.toFamily);
+        }
+      });
+    }
+
+    let toRelations = data.relations.filter((relation: any) => relation.toFamily === currentFont);
+    for (let relation of toRelations) {
+      shownFonts.push({
+        fontFamily: relation.fromFamily,
+        previewText: previewText,
+        previewSize: previewSize,
+        relation: relation,
+        onClick: () => {
+          setCurrentFont(relation.fromFamily);
+        }
+      });
+    }
+
+    // Pick a random set of n fonts that aren't yet related to the current font
+    let suggestionAmount = 6;
+    let suggestions = (fonts).filter((font: any) => {
+      return !data.relations.some((relation: any) => relation.fromFamily === font.family || relation.toFamily === font.family);
+    }).sort(() => Math.random() - 0.5).slice(0, suggestionAmount);
+    for (let suggestion of suggestions) {
+      let emptyRelation = {
+        fromFamily: currentFont,
+        toFamily: suggestion.family,
+        property: "",
+        valueChange: 0
+      }
+      shownFonts.push({
+        fontFamily: suggestion.family,
+        previewText: previewText,
+        previewSize: previewSize,
+        relation: emptyRelation,
+        onClick: () => {
+          setCurrentFont(suggestion.family);
+        }
+      });
+    }
+    setRelations(shownFonts);
+  }, [currentFont]);
+
+
+
   return (
     <div className="">
 
@@ -40,7 +99,15 @@ export default function Home() {
         <CurrentFont font={currentFont} size={previewSize} text={previewText} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <FontBlock font="Georgia" />
+          {relations.map((props: FontBlockProps, index: number) => (
+            <FontBlock 
+              key={index}
+              fontFamily={props.fontFamily}
+              previewText={props.previewText}
+              previewSize={props.previewSize}
+              relation={props.relation}
+              onClick={props.onClick} />
+          ))}
         </div>
 
       </main>
