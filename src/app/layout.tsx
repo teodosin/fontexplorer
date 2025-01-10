@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { createContext, useEffect, useState } from "react";
-import Button from "@/components/Button";
-import { ThemeProvider, useTheme } from "@/ThemeContext";
+import dynamic from 'next/dynamic';
+
+// Client components that are not server-side renderable
+const ThemeProvider = dynamic(() => import('@/ThemeContext').then(mod => mod.ThemeProvider), { ssr: false });
+const FontSaver = dynamic(() => import('@/components/FontSaver'), { ssr: false });
+const Header = dynamic(() => import('@/components/Header'), { ssr: false });
+
 import { getFontsList } from "@/fonts_server";
-import FontSaver from "@/components/FontSaver";
-import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Font Explorer",
@@ -28,7 +29,7 @@ export default async function RootLayout({
         className={`antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
-          
+
           <FontSaver fonts={fonts} />
 
           <Header />
