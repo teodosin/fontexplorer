@@ -18,4 +18,4 @@ This app is just a proof of concept and is not intended to be a fully-featured f
 
 This is a [Next.js](https://nextjs.org) project, and my first time using the framework. [Tailwind](https://tailwindcss.com/) is used for styling.
 
-It uses the [Google Fonts API](https://developers.google.com/fonts/docs/developer_api) to load font data. 
+The [Google Fonts API](https://developers.google.com/fonts/docs/developer_api) is used to load font data. 
