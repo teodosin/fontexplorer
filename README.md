@@ -13,6 +13,7 @@ To run, either clone the repo and "npm install" + "npm run dev", or visit the [d
 * [x] Font suggestions and changing the active font
 * [x] Font rendering
 * [ ] Font relations
+* [ ] Proper mobile support
 
 This app is just a proof of concept and is not intended to be a fully-featured font explorer. A proper app would need a central database for the font relations so individual users wouldn't have to define relations for the hundreds of fonts that there are. Creating embeddings for fonts and implementing a vector database would also be very interesting to explore. 
 
