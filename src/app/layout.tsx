@@ -9,22 +9,10 @@ import { getFontsList } from "@/fonts_server";
 import FontSaver from "@/components/FontSaver";
 import Header from "@/components/Header";
 
-// const darkModeContext = createContext(false);
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// export const metadata: Metadata = {
-//   title: "Font Explorer",
-//   description: "Explore fonts by making comparisons",
-// };
+export const metadata: Metadata = {
+  title: "Font Explorer",
+  description: "Explore fonts by making comparisons",
+};
 
 export default async function RootLayout({
   children,
@@ -37,9 +25,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
+        className={`antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
         <ThemeProvider>
+          
           <FontSaver fonts={fonts} />
 
           <Header />
