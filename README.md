@@ -3,6 +3,10 @@
 
 This is a proof of concept application for exploring fonts through their relations. The idea is to allow a designer to find fonts by starting with some font and then finding fonts that are similar and different in specific ways. For example, finding fonts that are higher contrast, more formal or less formal, fit a certain style more and so on. 
 
+To run, either clone the repo and "npm install" + "npm run dev", or visit the [deployed version](https://fontexplorer.vercel.app/).
+
+## Features
+
 * [x] Basic app structure
 * [x] Font loading from Google Fonts API
 * [x] Theme switching (dark/light)
