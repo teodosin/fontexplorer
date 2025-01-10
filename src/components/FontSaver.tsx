@@ -1,5 +1,6 @@
 'use client'
 
+import { isClient } from "@/utils";
 import { useEffect } from "react";
 
 // This component is used to save the fonts to local storage.
@@ -12,6 +13,7 @@ import { useEffect } from "react";
 
 export default function FontSaver({ fonts }: { fonts: any[] }) {
   useEffect(() => {
+    if (!isClient) return;
     localStorage.setItem("fonts", JSON.stringify(fonts));
 
   }, [])  

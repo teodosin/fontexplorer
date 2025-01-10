@@ -3,6 +3,7 @@
 const THEME_KEY = "teodosin-font-explorer-theme";
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { isClient } from './utils';
 
 interface ThemeData {
     version: "0.0.1";
@@ -10,10 +11,19 @@ interface ThemeData {
 }
 
 export function saveTheme(data: ThemeData) {
+    if (!isClient()) {
+        return;
+    }
     localStorage.setItem(THEME_KEY, JSON.stringify(data));
 }
 
 export function loadTheme(): ThemeData {
+    if (!isClient()) {
+        return {
+            version: "0.0.1",
+            theme: "dark"
+        }
+    }
     const data = localStorage.getItem(THEME_KEY);
     if (data) {
         return JSON.parse(data);

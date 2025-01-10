@@ -8,7 +8,7 @@ interface CurrentFontProps {
 
 export default function CurrentFont({ font, size, text }: CurrentFontProps) {
   let preview = text == '' ? 'Quick Brown Fox' : text
-  
+
   return (
     <div
       className="max-w-36rem w-full px-8 pt-6 pb-16 text-center rounded-full overflow-hidden bg-white dark:bg-gray-800 p-4 justify-center items-center"
