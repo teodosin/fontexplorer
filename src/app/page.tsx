@@ -104,9 +104,11 @@ export default function Home() {
     }
 
     // Use WebFont to load the fonts before updating relations
+    let families = shownFonts.map((font: any) => font.fontFamily);
+    families.push(currentFont);
     WebFont.load({
       google: {
-        families: shownFonts.map((font: any) => font.fontFamily)
+        families: families,
         // api: process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY,
       },
       loading: () => {
