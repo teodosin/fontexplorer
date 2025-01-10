@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+// src/app/layout.tsx
 import dynamic from 'next/dynamic';
 
-// Client components that are not server-side renderable
-const ThemeProvider = dynamic(() => import('@/ThemeContext').then(mod => mod.ThemeProvider), { ssr: false });
-const FontSaver = dynamic(() => import('@/components/FontSaver'), { ssr: false });
-const Header = dynamic(() => import('@/components/Header'), { ssr: false });
+import { ThemeProvider } from "@/ThemeContext";
+import Header from "@/components/Header";
 
 import { getFontsList } from "@/fonts_server";
 
@@ -28,9 +27,7 @@ export default async function RootLayout({
       <body
         className={`antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
-        <ThemeProvider>
-
-          <FontSaver fonts={fonts} />
+        <ThemeProvider fonts={fonts}>
 
           <Header />
 

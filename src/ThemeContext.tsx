@@ -2,8 +2,12 @@
 
 const THEME_KEY = "teodosin-font-explorer-theme";
 
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { isClient } from './utils';
+import dynamic from 'next/dynamic';
+
+const FontSaver = dynamic(() => import('@/components/FontSaver'), { ssr: false });
 
 interface ThemeData {
     version: "0.0.1";
@@ -43,7 +47,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children, fonts }: { children: React.ReactNode, fonts: any[] }) {
     const [theme, setTheme] = useState<"light" | "dark">("dark")
 
     useEffect(() => {
