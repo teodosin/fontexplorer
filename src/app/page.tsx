@@ -2,6 +2,7 @@
 
 import CurrentFont from "@/components/CurrentFont";
 import FontBlock from "@/components/FontBlock";
+import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
 import { loadCurrents } from "@/fonts";
 import { useEffect, useState } from "react";
@@ -30,6 +31,7 @@ export default function Home() {
 
       <div className="fixed bottom-0 left-0 right-0 h-20 flex items-center flex-col mb-20">
           <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
+          <Slider onChange={setPreviewSize} value={previewSize} />
       </div>
     </div>
   );
