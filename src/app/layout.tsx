@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// src/app/layout.tsx
-import dynamic from 'next/dynamic';
-
-import { ThemeProvider } from "@/ThemeContext";
-import Header from "@/components/Header";
-
-import { getFontsList } from "@/fonts_server";
+import { getFontsList } from "@/utils/fonts_server";
+import ClientProviders from "@/ClientProviders";
 
 export const metadata: Metadata = {
   title: "Font Explorer",
@@ -27,16 +22,14 @@ export default async function RootLayout({
       <body
         className={`antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
       >
-        <ThemeProvider fonts={fonts}>
-
-          <Header />
+        <ClientProviders fonts={fonts}>
 
           {children}
 
           <footer className="fixed bottom-0 items-center justify-center">
           </footer>
 
-        </ThemeProvider>
+        </ClientProviders>
       </body>
     </html>
   );

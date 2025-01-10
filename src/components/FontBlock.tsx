@@ -1,4 +1,4 @@
-import { Relation } from '@/fonts_client'
+import { Relation } from '@/utils/fonts_client'
 import { MouseEventHandler } from 'react'
 
 export interface FontBlockProps {
