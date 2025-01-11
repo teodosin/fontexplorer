@@ -51,11 +51,11 @@ export function loadCurrents(): CurrentData {
 export interface RelationsData {
     version: "0.0.1";
     fromFamily: string;
-    relations: Relation[];
+    relations: Map<string, Relation>;
 }
 
 export interface Relation {
-    fromFamily: string;
+    fromFamily: string; // Redundant maybe?
     toFamily: string;
     comparison: string;
 }
@@ -75,7 +75,7 @@ export function loadRelations(family: string): RelationsData {
         return {
             version: "0.0.1",
             fromFamily: "Georgia",
-            relations: []
+            relations: new Map()
         }
     }
 
@@ -89,11 +89,10 @@ export function loadRelations(family: string): RelationsData {
         return {
             version: "0.0.1",
             fromFamily: "Georgia",
-            relations: []
+            relations: new Map()
         }
     }
 }
-
 export interface GoogleFont {
     family: string;
 }

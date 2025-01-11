@@ -1,4 +1,4 @@
-import { Relation, RELATIONS_KEY } from '@/utils/fonts_client'
+import { Relation, RELATIONS_KEY, RelationsData } from '@/utils/fonts_client'
 import { MouseEventHandler, useEffect, useState } from 'react'
 
 export interface FontBlockProps {
@@ -26,14 +26,39 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
   const saveRelation = () => {
     let key = RELATIONS_KEY + "_" + relation.fromFamily;
 
-    let newRel = {
-      fromFamily: relation.fromFamily,
-      toFamily: relation.toFamily,
-      comparison: comparison
+    let relData: RelationsData;
+    if (localStorage.getItem(key)) {
+        const storedData = JSON.parse(localStorage.getItem(key) || "");
+        relData = {
+            version: "0.0.1",
+            fromFamily: relation.fromFamily,
+            relations: new Map(Object.entries(storedData.relations || {}))
+        }
+    }
+    else {
+        relData = {
+            version: "0.0.1",
+            fromFamily: relation.fromFamily,
+            relations: new Map()
+        }
     }
 
-    localStorage.setItem(key, JSON.stringify(newRel));
-  }
+    let newRel: Relation = {
+        fromFamily: relation.fromFamily,
+        toFamily: relation.toFamily,
+        comparison: comparison
+    }
+
+    relData.relations.set(relation.toFamily, newRel);
+
+    const dataToStore = {
+        ...relData,
+        relations: Object.fromEntries(relData.relations)
+    };
+
+    localStorage.setItem(key, JSON.stringify(dataToStore));
+}
+
 
   return (
     <div
@@ -67,7 +92,10 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
         </span>
         <textarea rows={2}
           value={comparison}
-          onChange={(e) => setComparison(e.target.value)}
+          onChange={(e) => {
+            setComparison(e.target.value)
+            saveRelation()
+          }}
           className="resize-none mt-2 bg-slate-100 dark:bg-slate-700 w-full rounded-lg p-2"
         />
       </div>

@@ -51,11 +51,12 @@ export default function Home() {
   useEffect(() => {
     let fonts = getFontsFromLocal();
     // Fetching relations from localstorage when currentFont changes
-    let data = loadRelations(currentFont);
+    let data = Object.values(loadRelations(currentFont));
 
     let shownFonts: FontBlockProps[] = []
 
-    let fromRelations = data.relations.filter((relation: any) => relation.fromFamily === currentFont);
+
+    let fromRelations = data.filter((relation: any) => relation.fromFamily === currentFont);
     for (let relation of fromRelations) {
       shownFonts.push({
         fontFamily: relation.toFamily,
@@ -68,7 +69,7 @@ export default function Home() {
       });
     }
 
-    let toRelations = data.relations.filter((relation: any) => relation.toFamily === currentFont);
+    let toRelations = data.filter((relation: any) => relation.toFamily === currentFont);
     for (let relation of toRelations) {
       shownFonts.push({
         fontFamily: relation.fromFamily,
@@ -84,7 +85,7 @@ export default function Home() {
     // Pick a random set of n fonts that aren't yet related to the current font
     let suggestionAmount = 6;
     let suggestions = (fonts).filter((font: any) => {
-      return !data.relations.some((relation: any) => relation.fromFamily === font.family || relation.toFamily === font.family);
+      return !data.some((relation: any) => relation.fromFamily === font.family || relation.toFamily === font.family);
     }).sort(() => Math.random() - 0.5).slice(0, suggestionAmount);
     for (let suggestion of suggestions) {
       let emptyRelation = {
@@ -145,7 +146,7 @@ export default function Home() {
 
       </main>
 
-      <div className={`fixed bottom-0 left-0 right-0 flex items-center flex-col gap-4 mb-20`}>
+      <div className={`fixed bottom-0 left-0 right-0 flex items-center flex-col gap-4 mb-20 pointer-events-none`}>
           <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
           <Slider onChange={setPreviewSize} value={previewSize} />
       </div>
