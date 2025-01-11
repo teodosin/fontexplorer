@@ -29,7 +29,7 @@ export function loadCurrents(): CurrentData {
         return {
             version: "0.0.1",
             currentFont: "Georgia",
-            currentFontSize: 16,
+            currentFontSize: 28,
             currentPreviewText: "The quick brown fox jumps over the lazy dog"
         }
     }
@@ -63,7 +63,7 @@ export interface Relation {
 // Reminder: Use saveRelations only inside hooks
 export function saveRelations(data: RelationsData) {
     if (!isClient()) return;
-    
+
     localStorage.setItem(RELATIONS_KEY, JSON.stringify(data));
 }
 

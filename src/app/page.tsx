@@ -11,7 +11,7 @@ import WebFont from "webfontloader";
 export default function Home() {
   const [ currentFont, setCurrentFont ] = useState("Georgia");
   const [ previewText, setPreviewText ] = useState("");
-  const [ previewSize, setPreviewSize ] = useState(16);
+  const [ previewSize, setPreviewSize ] = useState(28);
 
   const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
 
