@@ -5,7 +5,7 @@ import { isClient } from "./utils";
 const GOOGLE_FONTS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY;
 
 const CURRENTS_KEY = "teodosin-font-explorer";
-const RELATIONS_KEY = "teodosin-font-explorer-relations";
+export const RELATIONS_KEY = "teodosin-font-explorer-relations";
 
 // Data structure for saving current state to localstorage
 export interface CurrentData {
@@ -38,7 +38,7 @@ export function loadCurrents(): CurrentData {
         return JSON.parse(data);
     }
     else {
-        return  {
+        return {
             version: "0.0.1",
             currentFont: "Georgia",
             currentFontSize: 16,
@@ -50,7 +50,7 @@ export function loadCurrents(): CurrentData {
 // Saving relations to localstorage
 export interface RelationsData {
     version: "0.0.1";
-    relationTypes: string[];
+    fromFamily: string;
     relations: Relation[];
 }
 
@@ -64,26 +64,31 @@ export interface Relation {
 export function saveRelations(data: RelationsData) {
     if (!isClient()) return;
 
-    localStorage.setItem(RELATIONS_KEY, JSON.stringify(data));
+    let key = RELATIONS_KEY + "_" + data.fromFamily;
+
+    localStorage.setItem(key, JSON.stringify(data));
 }
 
 // Reminder: Use loadRelations only inside hooks
-export function loadRelations(): RelationsData {
+export function loadRelations(family: string): RelationsData {
     if (!isClient()) {
         return {
             version: "0.0.1",
-            relationTypes: [],
+            fromFamily: "Georgia",
             relations: []
         }
     }
-    const data = localStorage.getItem(RELATIONS_KEY);
+
+    let key = RELATIONS_KEY + "_" + family;
+
+    const data = localStorage.getItem(key);
     if (data) {
         return JSON.parse(data);
     }
     else {
-        return  {
+        return {
             version: "0.0.1",
-            relationTypes: [],
+            fromFamily: "Georgia",
             relations: []
         }
     }

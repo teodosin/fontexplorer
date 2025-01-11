@@ -1,5 +1,5 @@
-import { Relation } from '@/utils/fonts_client'
-import { MouseEventHandler } from 'react'
+import { Relation, RELATIONS_KEY } from '@/utils/fonts_client'
+import { MouseEventHandler, useEffect, useState } from 'react'
 
 export interface FontBlockProps {
   fontFamily: string
@@ -12,10 +12,27 @@ export interface FontBlockProps {
 export default function FontBlock({ fontFamily, previewText, previewSize, relation, onClick }: FontBlockProps) {
   let preview = previewText == '' ? 'Quick Brown Fox' : previewText
 
+  const [comparison, setComparison] = useState(relation.comparison)
+
+  useEffect(() => {
+    setComparison(relation.comparison)
+  }, [relation])
+
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     onClick(event)
-    
+  }
+
+  const saveRelation = () => {
+    let key = RELATIONS_KEY + "_" + relation.fromFamily;
+
+    let newRel = {
+      fromFamily: relation.fromFamily,
+      toFamily: relation.toFamily,
+      comparison: comparison
+    }
+
+    localStorage.setItem(key, JSON.stringify(newRel));
   }
 
   return (
@@ -49,6 +66,8 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
           Compare to current font:
         </span>
         <textarea rows={2}
+          value={comparison}
+          onChange={(e) => setComparison(e.target.value)}
           className="resize-none mt-2 bg-slate-100 dark:bg-slate-700 w-full rounded-lg p-2"
         />
       </div>

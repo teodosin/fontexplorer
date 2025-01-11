@@ -12,7 +12,7 @@ export default function Home() {
   const [ currentFont, setCurrentFont ] = useState("Georgia");
   const [ previewText, setPreviewText ] = useState("");
   const [ previewSize, setPreviewSize ] = useState(28);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [ isInitialized, setIsInitialized ] = useState(false);
 
   const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
 
@@ -51,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     let fonts = getFontsFromLocal();
     // Fetching relations from localstorage when currentFont changes
-    let data = loadRelations();
+    let data = loadRelations(currentFont);
 
     let shownFonts: FontBlockProps[] = []
 
