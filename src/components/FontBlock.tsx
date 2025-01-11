@@ -33,7 +33,7 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
         onClick={handleButtonClick}
         className="flex flex-grow flex-col w-full py-4 justify-center rounded-3xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
       >
-        <span className="w-full text-center text-gray-700 dark:text-gray-200 overflow"
+        <span className="w-full text-center hover:scale-105 transition-transform text-gray-700 dark:text-gray-200 overflow"
           style={{
             fontFamily: fontFamily,
             fontSize: `${previewSize}px`,
