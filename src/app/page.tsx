@@ -12,6 +12,7 @@ export default function Home() {
   const [ currentFont, setCurrentFont ] = useState("Georgia");
   const [ previewText, setPreviewText ] = useState("");
   const [ previewSize, setPreviewSize ] = useState(28);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
 
@@ -20,11 +21,11 @@ export default function Home() {
     setCurrentFont(data.currentFont);
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
-
-
+    setIsInitialized(true);
   }, []);
 
   useEffect(() => {
+    if (!isInitialized) return;
     // Saving current state to localstorage
     saveCurrents({
       version: "0.0.1",
