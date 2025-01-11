@@ -54,21 +54,16 @@ export interface RelationsData {
     relations: Relation[];
 }
 
-// Relations are defined by a property and a value change.
-// Some properties can't be exactly quantified so we can just
-// say if it's more or less. 
 export interface Relation {
     fromFamily: string;
     toFamily: string;
-    property: string;
-    valueChange: number | "more" | "less";
+    comparison: string;
 }
 
 // Reminder: Use saveRelations only inside hooks
 export function saveRelations(data: RelationsData) {
-    if (!isClient()) {
-        return;
-    }
+    if (!isClient()) return;
+    
     localStorage.setItem(RELATIONS_KEY, JSON.stringify(data));
 }
 

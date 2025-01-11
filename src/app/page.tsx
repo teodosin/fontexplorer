@@ -89,8 +89,7 @@ export default function Home() {
       let emptyRelation = {
         fromFamily: currentFont,
         toFamily: suggestion.family,
-        property: "",
-        valueChange: 0
+        comparison: "",
       }
       shownFonts.push({
         fontFamily: suggestion.family,
