@@ -9,13 +9,13 @@ import { useEffect, useState } from "react";
 import WebFont from "webfontloader";
 
 export default function Home() {
-  const [ currentFont, setCurrentFont ] = useState("Georgia");
-  const [ previewText, setPreviewText ] = useState("");
-  const [ previewSize, setPreviewSize ] = useState(28);
-  const [ isInitialized, setIsInitialized ] = useState(false);
+  const [currentFont, setCurrentFont] = useState("Georgia");
+  const [previewText, setPreviewText] = useState("");
+  const [previewSize, setPreviewSize] = useState(28);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const [ fonts, setFonts ] = useState<any[]>([]);
-  const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
+  const [fonts, setFonts] = useState<any[]>([]);
+  const [relations, setRelations] = useState<FontBlockProps[]>([]);
 
   useEffect(() => {
     let data = loadCurrents();
@@ -40,8 +40,8 @@ export default function Home() {
 
     // Updating shown fonts with new text and size
     let updated: FontBlockProps[] = [];
-    for (let rel in relations){
-       let newRel: FontBlockProps = {
+    for (let rel in relations) {
+      let newRel: FontBlockProps = {
         ...relations[rel],
         previewSize: previewSize,
         previewText: previewText
@@ -53,7 +53,6 @@ export default function Home() {
   }, [currentFont, previewSize, previewText]);
 
   useEffect(() => {
-    console.log(fonts);
 
     // Check if any font has the fontFamily of currentFont
     // If not, return
@@ -140,7 +139,14 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 items-center justify-center mb-52">
 
-        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" list="fonts"/>
+        {fonts.length == 0 && (
+          <h5 className="w-96 text-center text-gray-500 dark:text-gray-400">
+            Note! The displaying of font suggestions is currently bugged when
+            loading the app for the first time. To fix, type a font like "Arial" into the search box and reload the page.
+          </h5>
+        )}
+        
+        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" list="fonts" />
 
         <datalist id="fonts">
           {fonts.map((font: any) => (
@@ -152,7 +158,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {relations.map((props: FontBlockProps, index: number) => (
-            <FontBlock 
+            <FontBlock
               key={index}
               fontFamily={props.fontFamily}
               previewText={props.previewText}
@@ -165,8 +171,8 @@ export default function Home() {
       </main>
 
       <div className={`fixed bottom-0 left-0 right-0 flex items-center flex-col gap-4 mb-20 pointer-events-none`}>
-          <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
-          <Slider onChange={setPreviewSize} value={previewSize} />
+        <TextInput onChange={setPreviewText} text={previewText} type="preview-text" />
+        <Slider onChange={setPreviewSize} value={previewSize} />
       </div>
     </div>
   );

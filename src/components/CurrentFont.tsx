@@ -16,6 +16,7 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
     >
       <div className="flex flex-row w-full px-6 justify-between items-center gap-4 pb-8">
         <button
+          disabled={true}
           onClick={() => {
             // logic to go back in history
           }}
@@ -30,6 +31,7 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
         </h6>
 
         <button
+          disabled={true}
           onClick={() => {
             // logic to go back in history
           }}
