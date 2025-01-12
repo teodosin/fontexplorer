@@ -14,7 +14,7 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
     <div
       className="max-w-36rem w-full px-8 pt-2 pb-16 text-center rounded-full overflow-hidden bg-white dark:bg-gray-800 p-4 justify-center items-center"
     >
-      <div className="flex flex-row w-full px-6 justify-between items-center gap-4 pb-8">
+      <div className="flex flex-row w-full px-6 justify-center items-center gap-4 pb-8">
         <button
           disabled={true}
           onClick={() => {
@@ -26,7 +26,7 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
           ↢
         </button>
 
-        <h6 className="text-gray-700 dark:text-gray-400 text-base pt-2">
+        <h6 className="text-gray-700 dark:text-gray-400 text-base pt-1">
           {font}
         </h6>
 
