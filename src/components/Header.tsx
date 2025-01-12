@@ -15,7 +15,7 @@ export default function Header() {
   }, [theme]);
 
   return (
-    <header className="flex items-center justify-between p-4 top-0 sticky">
+    <header className="pointer-events-none flex items-center justify-between p-4 top-0 sticky">
       <Button
         onClick={() => {
           console.log("Changing theme to: ", theme);
