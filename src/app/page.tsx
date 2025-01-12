@@ -60,10 +60,11 @@ export default function Home() {
     if (!fonts.some((font: any) => font.family === currentFont)) return;
 
     // Fetching relations from localstorage when currentFont changes
-    let data = Object.values(loadRelations(currentFont));
+    let data = Object.values(loadRelations(currentFont).relations);
+
+    console.log("Relations for " + currentFont + ": " + data);
 
     let shownFonts: FontBlockProps[] = []
-
 
     let fromRelations = data.filter((relation: any) => relation.fromFamily === currentFont);
     for (let relation of fromRelations) {
