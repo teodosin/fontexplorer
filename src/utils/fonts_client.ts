@@ -30,7 +30,7 @@ export function loadCurrents(): CurrentData {
             version: "0.0.1",
             currentFont: "Georgia",
             currentFontSize: 28,
-            currentPreviewText: "The quick brown fox jumps over the lazy dog"
+            currentPreviewText: "Quick Brown Fox"
         }
     }
     const data = localStorage.getItem(CURRENTS_KEY);
@@ -41,8 +41,8 @@ export function loadCurrents(): CurrentData {
         return {
             version: "0.0.1",
             currentFont: "Georgia",
-            currentFontSize: 16,
-            currentPreviewText: "The quick brown fox jumps over the lazy dog"
+            currentFontSize: 28,
+            currentPreviewText: "Quick Brown Fox"
         }
     }
 }
