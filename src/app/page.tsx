@@ -14,6 +14,7 @@ export default function Home() {
   const [ previewSize, setPreviewSize ] = useState(28);
   const [ isInitialized, setIsInitialized ] = useState(false);
 
+  const [ fonts, setFonts ] = useState<any[]>([]);
   const [ relations, setRelations ] = useState<FontBlockProps[]>([]);
 
   useEffect(() => {
@@ -21,6 +22,9 @@ export default function Home() {
     setCurrentFont(data.currentFont);
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
+
+    let fonts = getFontsFromLocal();
+    setFonts(fonts);
     setIsInitialized(true);
   }, []);
 
@@ -49,7 +53,12 @@ export default function Home() {
   }, [currentFont, previewSize, previewText]);
 
   useEffect(() => {
-    let fonts = getFontsFromLocal();
+    console.log(fonts);
+
+    // Check if any font has the fontFamily of currentFont
+    // If not, return
+    if (!fonts.some((font: any) => font.family === currentFont)) return;
+
     // Fetching relations from localstorage when currentFont changes
     let data = Object.values(loadRelations(currentFont));
 
@@ -129,6 +138,14 @@ export default function Home() {
     <div className="">
 
       <main className="flex flex-col gap-8 items-center justify-center">
+
+        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" />
+
+        <datalist id="fonts">
+          {fonts.map((font: any) => (
+            <option key={font.family} value={font.family} />
+          ))}
+        </datalist>
 
         <CurrentFont font={currentFont} size={previewSize} text={previewText} />
 
