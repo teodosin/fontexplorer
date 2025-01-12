@@ -102,9 +102,11 @@ export function getFontsFromLocal() {
     if (!isClient()) {
         return [];
     }
+    
     const fonts = localStorage.getItem("fonts");
     if (fonts) {
-        return JSON.parse(fonts);
+        let json = JSON.parse(fonts);
+        return json;
     }
     else {
         return [];

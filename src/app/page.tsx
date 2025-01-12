@@ -15,6 +15,7 @@ export default function Home() {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const [fonts, setFonts] = useState<any[]>([]);
+  const [fontsReady, setFontsReady] = useState(false);
   const [relations, setRelations] = useState<FontBlockProps[]>([]);
 
   useEffect(() => {
@@ -23,9 +24,21 @@ export default function Home() {
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
 
-    let fonts = getFontsFromLocal();
-    setFonts(fonts);
     setIsInitialized(true);
+  }, []);
+
+  // Loop to rerender when fonts are ready to be loaded on first startup
+  useEffect(() => {
+    const checkForFonts = () => {
+      const fonts = getFontsFromLocal();
+      if (fonts.length > 0) {
+        setFonts(fonts);
+      } else {
+        setTimeout(checkForFonts, 100);
+      }
+    };
+  
+    checkForFonts();
   }, []);
 
   useEffect(() => {
@@ -53,9 +66,6 @@ export default function Home() {
   }, [currentFont, previewSize, previewText]);
 
   useEffect(() => {
-
-    // Check if any font has the fontFamily of currentFont
-    // If not, return
     if (!fonts.some((font: any) => font.family === currentFont)) return;
 
     // Fetching relations from localstorage when currentFont changes
@@ -130,7 +140,7 @@ export default function Home() {
     });
 
     setRelations(shownFonts);
-  }, [currentFont]);
+  }, [currentFont, fonts]);
 
 
 
@@ -139,13 +149,6 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 items-center justify-center mb-52">
 
-        {fonts.length == 0 && (
-          <h5 className="w-96 text-center text-gray-500 dark:text-gray-400">
-            Note! The displaying of font suggestions is currently bugged when
-            loading the app for the first time. To fix, type a font like "Arial" into the search box and reload the page.
-          </h5>
-        )}
-        
         <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" list="fonts" />
 
         <datalist id="fonts">
