@@ -3,7 +3,7 @@
 
 This is a proof of concept application for exploring fonts through their relations. The idea is to allow a designer to find fonts by starting with some font and then finding fonts that are similar and different in specific ways. For example, finding fonts that are higher contrast, more formal or less formal, fit a certain style more and so on. 
 
-To run, either clone the repo and "npm install" + "npm run dev", or visit the [deployed version](https://fontexplorer.vercel.app/).
+To run, either clone the repo and `npm install` + `npm run dev`, or visit the [deployed version](https://fontexplorer.vercel.app/).
 
 ## Features
 
@@ -25,4 +25,4 @@ This app is just a proof of concept and is not intended to be a fully-featured f
 
 This is a [Next.js](https://nextjs.org) project, and my first time using the framework. [Tailwind](https://tailwindcss.com/) is used for styling.
 
-The [Google Fonts API](https://developers.google.com/fonts/docs/developer_api) is used to load font data. 
+The [Google Fonts API](https://developers.google.com/fonts/docs/developer_api) is used to load font data.`
