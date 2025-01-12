@@ -4,6 +4,7 @@ import Link from 'next/link'
 interface TextInputProps {
     type: "search" | "preview-text",
     text?: string,
+    list?: string,
     onChange?: (text: string) => void,
 }
 
@@ -24,6 +25,7 @@ export default function TextInput({ type, text, onChange }: TextInputProps) {
         <div className={containerClasses}>
             <input 
                 type="text" 
+                list={type === "search" ? "fonts" : undefined}
                 className={inputClasses} 
                 placeholder={placeholderMap[type]}
                 value={text}

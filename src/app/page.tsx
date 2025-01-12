@@ -139,7 +139,7 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 items-center justify-center">
 
-        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" />
+        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" list="fonts"/>
 
         <datalist id="fonts">
           {fonts.map((font: any) => (
