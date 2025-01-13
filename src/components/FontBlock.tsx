@@ -96,7 +96,7 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
             setComparison(e.target.value)
             saveRelation()
           }}
-          className="resize-none mt-2 bg-slate-100 dark:bg-slate-700 w-full rounded-lg p-2"
+          className="scrollbar-thin resize-none mt-2 bg-slate-100 dark:bg-slate-700 w-full rounded-lg p-2"
         />
       </div>
 

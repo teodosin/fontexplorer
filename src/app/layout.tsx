@@ -18,9 +18,11 @@ export default async function RootLayout({
   let fonts = await getFontsList();
 
   return (
-    <html lang="en">
+    <html className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-400" lang="en">
       <body
-        className={`antialiased bg-slate-200 dark:bg-black transition-colors duration-500 dark:text-gray-100`}
+        className={`
+          antialiased
+          bg-slate-200 dark:bg-black transition-colors duration-500 dark:text-gray-100`}
       >
         <ClientProviders fonts={fonts}>
 
