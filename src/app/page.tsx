@@ -4,7 +4,7 @@ import CurrentFont from "@/components/CurrentFont";
 import FontBlock, { FontBlockProps } from "@/components/FontBlock";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
-import { getFontsFromLocal, loadCurrents, loadRelations, saveCurrents } from "@/utils/fonts_client";
+import { getFontsFromLocal, loadCurrents, loadFavorites, loadRelations, saveCurrents, saveFavorites } from "@/utils/fonts_client";
 import { useEffect, useState } from "react";
 import WebFont from "webfontloader";
 
@@ -12,21 +12,26 @@ export default function Home() {
   const [currentFont, setCurrentFont] = useState("Georgia");
   const [previewText, setPreviewText] = useState("");
   const [previewSize, setPreviewSize] = useState(28);
+
   const [history, setHistory] = useState<string[]>([]);
   const [redoStack, setRedoStack] = useState<string[]>([]);
-  
+  const [favorites, setFavorites] = useState<string[]>([]);
+
   const [isInitialized, setIsInitialized] = useState(false);
 
   const [fonts, setFonts] = useState<any[]>([]);
-  const [fontsReady, setFontsReady] = useState(false);
   const [relations, setRelations] = useState<FontBlockProps[]>([]);
 
   useEffect(() => {
-    let data = loadCurrents();
+    const data = loadCurrents();
     setCurrentFont(data.currentFont);
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
     setHistory(data.history);
+
+    const favorites = loadFavorites();
+    console.log("favorites", favorites);
+    setFavorites(favorites);
 
     setIsInitialized(true);
   }, []);
@@ -41,9 +46,15 @@ export default function Home() {
         setTimeout(checkForFonts, 100);
       }
     };
-  
+
     checkForFonts();
   }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    console.log("saving favorites", favorites);
+    saveFavorites(favorites);
+  }, [favorites]);
 
   useEffect(() => {
     if (!isInitialized) return;
@@ -87,6 +98,10 @@ export default function Home() {
         relation: relation,
         onClick: () => {
           changeFont(relation.toFamily);
+        },
+        isFavorited: isFavorited(relation.toFamily),
+        onFavoriteToggle: () => {
+          toggleFavorite(relation.toFamily);
         }
       });
     }
@@ -100,6 +115,10 @@ export default function Home() {
         relation: relation,
         onClick: () => {
           changeFont(relation.fromFamily);
+        },
+        isFavorited: isFavorited(relation.fromFamily),
+        onFavoriteToggle: () => {
+          toggleFavorite(relation.fromFamily);
         }
       });
     }
@@ -122,6 +141,10 @@ export default function Home() {
         relation: emptyRelation,
         onClick: () => {
           changeFont(suggestion.family);
+        },
+        isFavorited: isFavorited(suggestion.family),
+        onFavoriteToggle: () => {
+          toggleFavorite(suggestion.family);
         }
       });
     }
@@ -145,6 +168,21 @@ export default function Home() {
     setRelations(shownFonts);
   }, [currentFont, fonts]);
 
+  const toggleFavorite = (fontFamily: string) => {
+    let currentFavorites: string[] = [...favorites];
+    console.log("currentFavorites", currentFavorites);
+    if (currentFavorites.includes(fontFamily)) {
+      currentFavorites = currentFavorites.filter((favorite) => favorite !== fontFamily);
+    } else {
+      currentFavorites.push(fontFamily);
+    }
+    setFavorites(currentFavorites);
+  };
+
+  const isFavorited = (fontFamily: string) => {
+    return favorites.includes(fontFamily);
+  };
+
   const handleSearch = (searchText: string) => {
     setCurrentFont(searchText);
     if (fonts.some((font: any) => font.family === currentFont)) {
@@ -162,15 +200,15 @@ export default function Home() {
     if (history.length === 0) return;
     const newHistory = [...history];
     const lastItem = newHistory.pop();
-    
+
     if (lastItem) {
       setCurrentFont(lastItem);
       setHistory(newHistory);
       setRedoStack((prev) => [...prev, currentFont]);
     }
-};
+  };
 
-const redo = () => {
+  const redo = () => {
     if (redoStack.length === 0) return;
     const newRedoStack = [...redoStack];
     const lastRedo = newRedoStack.pop();
@@ -179,7 +217,7 @@ const redo = () => {
       setRedoStack(newRedoStack);
       setHistory((prev) => [...prev, currentFont]);
     }
-};
+  };
 
 
 
@@ -188,20 +226,43 @@ const redo = () => {
 
       <main className="flex flex-col gap-8 items-center justify-center mb-52">
 
-        <TextInput onChange={(text) => handleSearch(text)} text={currentFont} type="search" list="fonts" />
+        <div className="flex flex-col gap-4 w-96">
+
+          <div className="flex flex-row gap-4">
+            <select
+              className="dark:bg-gray-700 dark:text-white rounded-lg px-4 py-2 w-full shadow-lg pointer-events-auto"
+              value={currentFont}
+              onChange={(e) => { changeFont(e.target.value) }}
+            >
+              <option value="">Favorites</option>
+              {
+                favorites.map((favorite: string) => (
+                  <option key={favorite} value={favorite}>{favorite}</option>
+                ))
+              }
+            </select>
+
+          </div>
+          <TextInput onChange={(text) => handleSearch(text)} text={currentFont} type="search" list="fonts" />
+        </div>
 
         <datalist id="fonts">
-          {fonts.map((font: any) => (
-            <option key={font.family} value={font.family} />
-          ))}
+          {
+            fonts.map((font: any) => (
+              <option key={font.family} value={font.family} />
+            ))
+          }
         </datalist>
 
-        <CurrentFont 
-          font={currentFont} 
-          size={previewSize} 
-          text={previewText} 
-          leftBtn={history.length === 0 ? undefined : undo} 
-          rightBtn={redoStack.length === 0 ? undefined : redo} 
+
+        <CurrentFont
+          font={currentFont}
+          size={previewSize}
+          text={previewText}
+          leftBtn={history.length === 0 ? undefined : undo}
+          rightBtn={redoStack.length === 0 ? undefined : redo}
+          isFavorited={isFavorited(currentFont)}
+          onFavoriteToggle={toggleFavorite}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -212,7 +273,10 @@ const redo = () => {
               previewText={props.previewText}
               previewSize={props.previewSize}
               relation={props.relation}
-              onClick={props.onClick} />
+              onClick={props.onClick}
+              isFavorited={isFavorited(props.fontFamily)}
+              onFavoriteToggle={toggleFavorite}
+            />
           ))}
         </div>
 

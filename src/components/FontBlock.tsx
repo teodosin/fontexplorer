@@ -1,5 +1,7 @@
 import { Relation, RELATIONS_KEY, RelationsData } from '@/utils/fonts_client'
 import { MouseEventHandler, useEffect, useState } from 'react'
+import Button from './Button'
+import { on } from 'events'
 
 export interface FontBlockProps {
   fontFamily: string
@@ -7,9 +9,14 @@ export interface FontBlockProps {
   previewSize: number
   relation: Relation
   onClick: MouseEventHandler<HTMLButtonElement>
+  isFavorited: boolean
+  onFavoriteToggle: (fontFamily: string) => void
 }
 
-export default function FontBlock({ fontFamily, previewText, previewSize, relation, onClick }: FontBlockProps) {
+export default function FontBlock({
+  fontFamily, previewText, previewSize, relation, onClick, isFavorited, onFavoriteToggle
+}: FontBlockProps) {
+
   let preview = previewText == '' ? 'Quick Brown Fox' : previewText
 
   const [comparison, setComparison] = useState(relation.comparison)
@@ -63,12 +70,22 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
   return (
     <div
       className={
-        `w-80 px-2 rounded-3xl overflow-hidden bg-white dark:bg-gray-800 p-4 
+        `w-80 px-2 rounded-3xl overflow-hidden bg-white dark:bg-gray-800 p-1 
       justify-center items-center flex flex-col`
       }
     >
-      <div className="flex-shrink-0" >
-        <h6 className="text-gray-700 dark:text-gray-400 text-base">{fontFamily}</h6>
+      <div className="w-full justify-between flex flex-row flex-shrink-0" >
+        <Button height={32} width={64} 
+          onClick={() => {
+            onFavoriteToggle(fontFamily)
+          }}
+        >
+            <span className="text-2xl">
+              {isFavorited ? '★' : '☆'}
+            </span>
+        </Button>
+        <h6 className="text-gray-700 dark:text-gray-400 text-base pt-1 px-2">{fontFamily}</h6>
+        <div className="max-w-16 flex-grow h-8"></div>
       </div>
 
       <button
@@ -96,7 +113,9 @@ export default function FontBlock({ fontFamily, previewText, previewSize, relati
             setComparison(e.target.value)
             saveRelation()
           }}
-          className="scrollbar-thin resize-none mt-2 bg-slate-100 dark:bg-slate-700 w-full rounded-lg p-2"
+          className={`scrollbar-thin resize-none mt-2
+            bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors
+            w-full rounded-lg p-2`}
         />
       </div>
 

@@ -2,15 +2,15 @@ import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode,
-  width?: string,
-  height?: string,
+  width?: number,
+  height?: number,
   opaque?: boolean
 }
 
 export default function Button({
   children, 
-  width = '16px', 
-  height = '16px',
+  width = 64, 
+  height = 64,
   opaque = false,
   ...props 
 }: ButtonProps) {
@@ -19,16 +19,16 @@ export default function Button({
   return (
     <button
       {...props}
+      style={{ width: `${width}px`, height: `${height}px` }}
       className={
-        `${width} ${height} 
-        rounded-full overflow-hidden 
+        `rounded-full overflow-hidden 
         ${opaque ? 'bg-white dark:bg-gray-800' : ''}
-        ${props.disabled ? '' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}
+        ${props.disabled ? 'opacity-60' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}
         transition-colors 
-        p-4 justify-center items-center 
+        justify-center items-center 
         pointer-events-auto`
       }>
-      <span className="dark:text-gray-300 text-gray-700 text-base">{children}</span>
+      <span className="dark:text-gray-300 text-gray-700">{children}</span>
     </button>
   )
 }

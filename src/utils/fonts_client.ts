@@ -5,6 +5,7 @@ import { isClient } from "./utils";
 const GOOGLE_FONTS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY;
 
 const CURRENTS_KEY = "teodosin-font-explorer";
+const FAVORITES_KEY = "teodosin-font-explorer-favorites";
 export const RELATIONS_KEY = "teodosin-font-explorer-relations";
 
 // Data structure for saving current state to localstorage
@@ -50,6 +51,25 @@ export function loadCurrents(): CurrentData {
     }
 }
 
+export function saveFavorites(favorites: string[]) {
+    if (!isClient()) {
+        return;
+    }
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+}
+
+export function loadFavorites(): string[] {
+    if (!isClient()) {
+        return [];
+    }
+    const data = localStorage.getItem(FAVORITES_KEY);
+    if (data) {
+        return JSON.parse(data);
+    }
+    else {
+        return [];
+    }
+}
 // Saving relations to localstorage
 export interface RelationsData {
     version: "0.0.1";
