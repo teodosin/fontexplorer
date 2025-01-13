@@ -1,5 +1,6 @@
 'use client'
 
+import Button from "@/components/Button";
 import CurrentFont from "@/components/CurrentFont";
 import FontBlock, { FontBlockProps } from "@/components/FontBlock";
 import Slider from "@/components/Slider";
@@ -168,9 +169,12 @@ export default function Home() {
     setRelations(shownFonts);
   }, [currentFont, fonts]);
 
+  const calculateShownFonts = () => {
+    
+  }
+
   const toggleFavorite = (fontFamily: string) => {
     let currentFavorites: string[] = [...favorites];
-    console.log("currentFavorites", currentFavorites);
     if (currentFavorites.includes(fontFamily)) {
       currentFavorites = currentFavorites.filter((favorite) => favorite !== fontFamily);
     } else {
@@ -264,6 +268,10 @@ export default function Home() {
           isFavorited={isFavorited(currentFont)}
           onFavoriteToggle={toggleFavorite}
         />
+
+        <Button opaque={true} onClick={() => setCurrentFont(currentFont)}>
+          <span className="text-3xl">↻</span>
+        </Button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {relations.map((props: FontBlockProps, index: number) => (
