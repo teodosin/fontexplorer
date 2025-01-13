@@ -11,18 +11,18 @@ export default function Header() {
   const [label, setLabel] = useState("dark");
 
   useEffect(() => {
-    setLabel(theme === "light" ? "light" : "dark");
+    setLabel(theme === "light" ? "🌞" : "🌕");
   }, [theme]);
 
   return (
     <header className="pointer-events-none flex items-center justify-between p-4 top-0 sticky">
       <Button
+        opaque={true}
         onClick={() => {
-          console.log("Changing theme to: ", theme);
           toggleTheme();
         }}
       >
-        {label}
+        <span className="text-3xl">{label}</span>
       </Button>
     </header>
   )

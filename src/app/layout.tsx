@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased bg-slate-200 dark:bg-black dark:text-gray-100`}
+        className={`antialiased bg-slate-200 dark:bg-black transition-colors duration-500 dark:text-gray-100`}
       >
         <ClientProviders fonts={fonts}>
 

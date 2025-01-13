@@ -16,6 +16,9 @@ export default {
       maxWidth: {
         "32rem": "32rem",
         "36rem": "36rem",
+      },
+      borderRadius: {
+        "1/3": "33.333333%",
       }
     },
   },
