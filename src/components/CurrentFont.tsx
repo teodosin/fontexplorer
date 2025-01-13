@@ -5,10 +5,11 @@ interface CurrentFontProps {
   font: string
   size: number
   text: string
-  // setHistory: (history: string[]) => void
+  leftBtn: MouseEventHandler<HTMLButtonElement> | undefined
+  rightBtn: MouseEventHandler<HTMLButtonElement> | undefined
 }
 
-export default function CurrentFont({ font, size, text }: CurrentFontProps) {
+export default function CurrentFont({ font, size, text, leftBtn, rightBtn }: CurrentFontProps) {
   let preview = text == '' ? 'Quick Brown Fox' : text
 
   return (
@@ -17,9 +18,10 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
     >
       <div className="flex flex-row w-full px-6 justify-center items-center gap-4 pb-8">
         <Button
-          disabled={true}
-          onClick={() => {
-            // logic to go back in history
+          disabled={leftBtn === undefined}
+          onClick={(e) => {
+            if (leftBtn === undefined) return;
+            leftBtn(e);
           }}
         >
           <span className="text-2xl">↢</span>
@@ -30,9 +32,10 @@ export default function CurrentFont({ font, size, text }: CurrentFontProps) {
         </h6>
 
         <Button
-          disabled={true}
-          onClick={() => {
-            // logic to go back in history
+          disabled={rightBtn === undefined}
+          onClick={(e) => {
+            if (rightBtn === undefined) return;
+            rightBtn(e);
           }}
         >
           <span className="text-2xl">↣</span>

@@ -13,7 +13,7 @@ To run, either clone the repo and `npm install` + `npm run dev`, or visit the [d
 * [x] Font suggestions and changing the active font
 * [x] Font rendering
 * [x] Font relations
-* [ ] Font history
+* [x] Font history
 * [ ] Favorites
 * [ ] Proper mobile support
 

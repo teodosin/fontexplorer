@@ -12,6 +12,9 @@ export default function Home() {
   const [currentFont, setCurrentFont] = useState("Georgia");
   const [previewText, setPreviewText] = useState("");
   const [previewSize, setPreviewSize] = useState(28);
+  const [history, setHistory] = useState<string[]>([]);
+  const [redoStack, setRedoStack] = useState<string[]>([]);
+  
   const [isInitialized, setIsInitialized] = useState(false);
 
   const [fonts, setFonts] = useState<any[]>([]);
@@ -23,6 +26,7 @@ export default function Home() {
     setCurrentFont(data.currentFont);
     setPreviewText(data.currentPreviewText);
     setPreviewSize(data.currentFontSize);
+    setHistory(data.history);
 
     setIsInitialized(true);
   }, []);
@@ -48,7 +52,8 @@ export default function Home() {
       version: "0.0.1",
       currentFont: currentFont,
       currentFontSize: previewSize,
-      currentPreviewText: previewText
+      currentPreviewText: previewText,
+      history: history,
     })
 
     // Updating shown fonts with new text and size
@@ -71,8 +76,6 @@ export default function Home() {
     // Fetching relations from localstorage when currentFont changes
     let data = Object.values(loadRelations(currentFont).relations);
 
-    console.log("Relations for " + currentFont + ": " + data);
-
     let shownFonts: FontBlockProps[] = []
 
     let fromRelations = data.filter((relation: any) => relation.fromFamily === currentFont);
@@ -83,7 +86,7 @@ export default function Home() {
         previewSize: previewSize,
         relation: relation,
         onClick: () => {
-          setCurrentFont(relation.toFamily);
+          changeFont(relation.toFamily);
         }
       });
     }
@@ -96,7 +99,7 @@ export default function Home() {
         previewSize: previewSize,
         relation: relation,
         onClick: () => {
-          setCurrentFont(relation.fromFamily);
+          changeFont(relation.fromFamily);
         }
       });
     }
@@ -118,7 +121,7 @@ export default function Home() {
         previewSize: previewSize,
         relation: emptyRelation,
         onClick: () => {
-          setCurrentFont(suggestion.family);
+          changeFont(suggestion.family);
         }
       });
     }
@@ -132,15 +135,51 @@ export default function Home() {
         // api: process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY,
       },
       loading: () => {
-        console.log('Loading fonts...');
+        // console.log('Loading fonts...');
       },
       active: () => {
-        console.log('Fonts loaded!');
+        // console.log('Fonts loaded!');
       },
     });
 
     setRelations(shownFonts);
   }, [currentFont, fonts]);
+
+  const handleSearch = (searchText: string) => {
+    setCurrentFont(searchText);
+    if (fonts.some((font: any) => font.family === currentFont)) {
+      setHistory([...history, searchText]);
+    }
+  };
+
+  const changeFont = (font: string) => {
+    setRedoStack([]);
+    setCurrentFont(font);
+    setHistory([...history, currentFont]);
+  };
+
+  const undo = () => {
+    if (history.length === 0) return;
+    const newHistory = [...history];
+    const lastItem = newHistory.pop();
+    
+    if (lastItem) {
+      setCurrentFont(lastItem);
+      setHistory(newHistory);
+      setRedoStack((prev) => [...prev, currentFont]);
+    }
+};
+
+const redo = () => {
+    if (redoStack.length === 0) return;
+    const newRedoStack = [...redoStack];
+    const lastRedo = newRedoStack.pop();
+    if (lastRedo) {
+      setCurrentFont(lastRedo);
+      setRedoStack(newRedoStack);
+      setHistory((prev) => [...prev, currentFont]);
+    }
+};
 
 
 
@@ -149,7 +188,7 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 items-center justify-center mb-52">
 
-        <TextInput onChange={(text) => setCurrentFont(text)} text={currentFont} type="search" list="fonts" />
+        <TextInput onChange={(text) => handleSearch(text)} text={currentFont} type="search" list="fonts" />
 
         <datalist id="fonts">
           {fonts.map((font: any) => (
@@ -157,7 +196,13 @@ export default function Home() {
           ))}
         </datalist>
 
-        <CurrentFont font={currentFont} size={previewSize} text={previewText} />
+        <CurrentFont 
+          font={currentFont} 
+          size={previewSize} 
+          text={previewText} 
+          leftBtn={history.length === 0 ? undefined : undo} 
+          rightBtn={redoStack.length === 0 ? undefined : redo} 
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {relations.map((props: FontBlockProps, index: number) => (

@@ -13,6 +13,7 @@ export interface CurrentData {
     currentFont: string;
     currentFontSize: number;
     currentPreviewText: string;
+    history: string[];
 }
 
 // Reminder: Use saveCurrents only inside hooks
@@ -30,7 +31,8 @@ export function loadCurrents(): CurrentData {
             version: "0.0.1",
             currentFont: "Georgia",
             currentFontSize: 28,
-            currentPreviewText: "Quick Brown Fox"
+            currentPreviewText: "Quick Brown Fox",
+            history: []
         }
     }
     const data = localStorage.getItem(CURRENTS_KEY);
@@ -42,7 +44,8 @@ export function loadCurrents(): CurrentData {
             version: "0.0.1",
             currentFont: "Georgia",
             currentFontSize: 28,
-            currentPreviewText: "Quick Brown Fox"
+            currentPreviewText: "Quick Brown Fox",
+            history: []
         }
     }
 }
