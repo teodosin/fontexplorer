@@ -85,6 +85,10 @@ export default function Home() {
   useEffect(() => {
     if (!fonts.some((font: any) => font.family === currentFont)) return;
 
+    calculateShownFonts();
+  }, [currentFont, fonts]);
+
+  const calculateShownFonts = () => {
     // Fetching relations from localstorage when currentFont changes
     let data = Object.values(loadRelations(currentFont).relations);
 
@@ -167,10 +171,6 @@ export default function Home() {
     });
 
     setRelations(shownFonts);
-  }, [currentFont, fonts]);
-
-  const calculateShownFonts = () => {
-    
   }
 
   const toggleFavorite = (fontFamily: string) => {
@@ -241,7 +241,7 @@ export default function Home() {
               <option value="">Favorites</option>
               {
                 favorites.map((favorite: string) => (
-                  <option key={favorite} value={favorite}>{favorite}</option>
+                  <option className="p-2" key={favorite} value={favorite}>{favorite}</option>
                 ))
               }
             </select>
@@ -269,7 +269,7 @@ export default function Home() {
           onFavoriteToggle={toggleFavorite}
         />
 
-        <Button opaque={true} onClick={() => setCurrentFont(currentFont)}>
+        <Button opaque={true} onClick={() => calculateShownFonts()}>
           <span className="text-3xl">↻</span>
         </Button>
 
